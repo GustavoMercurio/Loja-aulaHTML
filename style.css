@@ -135,11 +135,12 @@ h2 {
   flex-direction: column;
 }
 
-/* Todas as imagens têm o mesmo tamanho e não ficam esticadas */
+/* A imagem inteira aparece dentro da área, sem cortar as laterais */
 .card-produto img {
   width: 100%;
   height: 200px;
-  object-fit: cover;
+  object-fit: contain;
+  background: #ffffff;
   border-radius: 5px;
   display: block;
 }
