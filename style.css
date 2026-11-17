@@ -97,25 +97,40 @@ h2 {
   padding-bottom: 8px;
 }
 
-/* Lista de vantagens */
+/* Quadro de vantagens estilizado como balão de anúncio */
 .vantagens {
-  background: #ffffff;
-  border: 2px solid #001f4d;
-  border-left: 10px solid #ffcc00;
-  border-radius: 8px;
-  padding: 20px;
+  background: #ffcc00;
+  border: 6px solid #cc0000;
+  border-radius: 20px;
+  padding: 25px 30px;
   margin-bottom: 40px;
+  box-shadow: 6px 6px 0 #001f4d;
+  position: relative;
+  text-align: center;
 }
 
+/* O título do balão não tem a linha vermelha de baixo, para ficar mais limpo */
+.vantagens h2 {
+  font-size: 24px;
+  color: #cc0000;
+  border-bottom: none;
+  margin-bottom: 15px;
+  padding-bottom: 0;
+}
+
+/* Itens em negrito, em azul marinho */
 .vantagens ul {
-  margin-left: 20px;
+  list-style: none;
 }
 
 .vantagens li {
-  margin-bottom: 8px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #001f4d;
+  margin-bottom: 10px;
 }
 
-/* Produtos lado a lado (flex). Todos os cards ficam com a mesma altura */
+/* Lista de produtos (flex). Todos os cards ficam com a mesma altura */
 .grade-produtos {
   display: flex;
   flex-wrap: wrap;
@@ -238,6 +253,11 @@ h2 {
 
 .botao:hover {
   background: #e6b800;
+}
+
+.botao-add {
+  width: 100%;
+  margin-top: auto;
 }
 
 .botao-remover {
