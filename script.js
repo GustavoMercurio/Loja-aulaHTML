@@ -1,9 +1,10 @@
 // ===== DADOS =====
 // Lista de produtos (array de objetos)
+// As imagens estão na raiz do repositório: accelo.jpg, delivery.jpg e fiorino.jpg
 var produtos = [
-  { nome: "Accelo 1016", preco: 335086.0, imagem: "https://picsum.photos/seed/accelo/300/200" },
-  { nome: "Delivery 11180", preco: 366541.0, imagem: "https://picsum.photos/seed/delivery/300/200" },
-  { nome: "Fiorino Endurance", preco: 91332.0, imagem: "https://picsum.photos/seed/fiorino/300/200" }
+  { nome: "Accelo 1016", preco: 335086.0, imagem: "accelo.jpg" },
+  { nome: "Delivery 11180", preco: 366541.0, imagem: "delivery.jpg" },
+  { nome: "Fiorino Endurance", preco: 91332.0, imagem: "fiorino.jpg" }
 ];
 
 // Carrinho começa vazio
