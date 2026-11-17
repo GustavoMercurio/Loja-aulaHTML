@@ -5,6 +5,11 @@
   padding: 0;
 }
 
+/* Classe para esconder uma tela inteira */
+.oculto {
+  display: none !important;
+}
+
 /* Corpo da página: fonte e cores */
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -13,8 +18,8 @@ body {
   background: #f5f5f5;
 }
 
-/* Cabeçalho fixo no topo (azul marinho) */
-#topo {
+/* Cabeçalho (azul marinho). Usado na loja e na tela de finalização */
+.topo {
   position: sticky;
   top: 0;
   z-index: 10;
@@ -31,6 +36,12 @@ body {
   font-size: 30px;
   font-weight: bold;
   color: #ffcc00;
+}
+
+.subtitulo {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
 }
 
 /* Menu em linha (lista sem bolinhas) */
@@ -109,7 +120,6 @@ h2 {
   text-align: center;
 }
 
-/* O título do balão não tem a linha vermelha de baixo, para ficar mais limpo */
 .vantagens h2 {
   font-size: 24px;
   color: #cc0000;
@@ -118,7 +128,6 @@ h2 {
   padding-bottom: 0;
 }
 
-/* Itens em negrito, em azul marinho */
 .vantagens ul {
   list-style: none;
 }
@@ -174,12 +183,6 @@ h2 {
   margin: 8px 0;
 }
 
-/* O botão vai sempre para o final do card, deixando todos alinhados */
-.botao-add {
-  width: 100%;
-  margin-top: auto;
-}
-
 /* Carrinho */
 #carrinho {
   margin-top: 50px;
@@ -219,6 +222,11 @@ h2 {
   margin: 10px 0;
 }
 
+/* Blocos da tela de finalização */
+.resumo {
+  margin-bottom: 30px;
+}
+
 /* Formulários */
 .formulario {
   background: #ffffff;
@@ -255,21 +263,37 @@ h2 {
   background: #e6b800;
 }
 
+/* Botão de adicionar produto dentro do card */
 .botao-add {
   width: 100%;
   margin-top: auto;
 }
 
+/* Botões pequenos dentro da tabela do carrinho */
+.botao-acao {
+  padding: 6px 10px;
+  margin: 2px;
+}
+
+.botao-aumentar {
+  background: #001f4d;
+  color: #ffffff;
+}
+
+.botao-aumentar:hover {
+  background: #002b6b;
+}
+
 .botao-remover {
   background: #cc0000;
   color: #ffffff;
-  padding: 6px 12px;
 }
 
 .botao-remover:hover {
   background: #990000;
 }
 
+/* Botão grande de finalizar e de confirmar compra */
 .botao-comprar {
   display: block;
   margin: 20px auto 0 auto;
@@ -283,6 +307,24 @@ h2 {
   background: #990000;
 }
 
+/* Botões lado a lado na tela de finalização */
+.acoes {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.acoes .botao {
+  flex: 1;
+  padding: 15px;
+}
+
+.acoes .botao-comprar {
+  margin: 0;
+  width: auto;
+}
+
 /* Rodapé */
 footer {
   background: #001f4d;
@@ -292,7 +334,7 @@ footer {
   border-top: 5px solid #ffcc00;
 }
 
-/* Adaptação para celular: um card por linha */
+/* Adaptação para celular */
 @media (max-width: 700px) {
   .card-produto {
     width: 100%;
@@ -302,7 +344,15 @@ footer {
     font-size: 22px;
   }
 
-  #topo {
+  .topo {
     flex-direction: column;
+  }
+
+  .acoes {
+    flex-direction: column;
+  }
+
+  .acoes .botao-comprar {
+    width: 100%;
   }
 }
