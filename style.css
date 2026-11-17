@@ -183,6 +183,12 @@ h2 {
   margin: 8px 0;
 }
 
+/* Botão de adicionar produto dentro do card (vai para o final do card) */
+.botao-add {
+  width: 100%;
+  margin-top: auto;
+}
+
 /* Carrinho */
 #carrinho {
   margin-top: 50px;
@@ -263,16 +269,19 @@ h2 {
   background: #e6b800;
 }
 
-/* Botão de adicionar produto dentro do card */
-.botao-add {
-  width: 100%;
-  margin-top: auto;
-}
-
 /* Botões pequenos dentro da tabela do carrinho */
 .botao-acao {
   padding: 6px 10px;
   margin: 2px;
+}
+
+.botao-diminuir {
+  background: #ffcc00;
+  color: #001f4d;
+}
+
+.botao-diminuir:hover {
+  background: #e6b800;
 }
 
 .botao-aumentar {
