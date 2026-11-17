@@ -124,6 +124,20 @@ function aumentarQuantidade(indice) {
   atualizarCarrinho();
 }
 
+// Diminui a quantidade de um item pelo índice.
+// Se chegar a zero, o item é removido do carrinho
+function diminuirQuantidade(indice) {
+  // Condicional: quantidade maior que 1 ou não
+  if (carrinho[indice].quantidade > 1) {
+    carrinho[indice].quantidade = carrinho[indice].quantidade - 1;
+    mensagemCarrinho.textContent = "Quantidade de " + carrinho[indice].nome + " diminuída.";
+  } else {
+    carrinho.splice(indice, 1);
+    mensagemCarrinho.textContent = "Item removido do carrinho.";
+  }
+  atualizarCarrinho();
+}
+
 // Remove um item pelo índice (posição na lista)
 function removerDoCarrinho(indice) {
   carrinho.splice(indice, 1);
@@ -150,6 +164,7 @@ function atualizarCarrinho() {
       "<td>R$ " + formatarPreco(item.preco) + "</td>" +
       "<td>" + item.quantidade + "</td>" +
       "<td>" +
+        '<button class="botao botao-acao botao-diminuir" data-indice="' + i + '">− Diminuir</button>' +
         '<button class="botao botao-acao botao-aumentar" data-indice="' + i + '">+ Aumentar</button>' +
         '<button class="botao botao-acao botao-remover" data-indice="' + i + '">Remover</button>' +
       "</td>" +
@@ -158,6 +173,15 @@ function atualizarCarrinho() {
 
   // Mostra o total com o desconto
   totalSpan.textContent = formatarPreco(calcularTotal());
+
+  // Evento de clique em cada botão "− Diminuir"
+  let botoesDiminuir = document.querySelectorAll(".botao-diminuir");
+  for (let i = 0; i < botoesDiminuir.length; i++) {
+    botoesDiminuir[i].addEventListener("click", function () {
+      let indice = Number(this.getAttribute("data-indice"));
+      diminuirQuantidade(indice);
+    });
+  }
 
   // Evento de clique em cada botão "+ Aumentar"
   let botoesAumentar = document.querySelectorAll(".botao-aumentar");
