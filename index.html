@@ -8,99 +8,157 @@
 </head>
 <body>
 
-  <!-- Cabeçalho com o menu (lista e links) -->
-  <header id="topo">
-    <h1 class="titulo-loja">Loja Exemplo</h1>
-    <nav>
-      <ul class="menu">
-        <li><a href="#produtos">Produtos</a></li>
-        <li><a href="#carrinho">Carrinho</a></li>
-        <li><a href="#contato">Contato</a></li>
-      </ul>
-    </nav>
-  </header>
+  <!-- TELA 1: a loja (produtos e carrinho) -->
+  <div id="tela-loja">
 
-  <!-- Banner com a imagem editada (caminhões no lugar dos pássaros) -->
-  <section class="banner">
-    <img src="banner.png" alt="Banner da loja com caminhões">
-    <p class="texto-banner">Compre os melhores semi-novos da Região</p>
-  </section>
+    <!-- Cabeçalho com o menu (lista e links) -->
+    <header class="topo">
+      <h1 class="titulo-loja">Loja Exemplo</h1>
+      <nav>
+        <ul class="menu">
+          <li><a href="#produtos">Produtos</a></li>
+          <li><a href="#carrinho">Carrinho</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+    </header>
 
-  <main>
-
-    <!-- Quadro de vantagens em formato de balão de anúncio -->
-    <section class="vantagens">
-      <h2>Vantagens de comprar com a MAIOR REVENDEDORA DE VEÍCULOS</h2>
-      <ul>
-        <li>Entregamos em qualquer cidade do Brasil</li>
-        <li>1 ano de GARANTIA</li>
-        <li>Financiamento PRÓPRIO</li>
-      </ul>
+    <!-- Banner com a imagem editada (caminhões no lugar dos pássaros) -->
+    <section class="banner">
+      <img src="banner.png" alt="Banner da loja com caminhões">
+      <p class="texto-banner">Compre os melhores semi-novos da Região</p>
     </section>
 
-    <!-- Produtos (preenchidos pelo JavaScript) -->
-    <section id="produtos">
-      <h2>Produtos</h2>
-      <div id="lista-produtos" class="grade-produtos"></div>
-    </section>
+    <main>
 
-    <!-- Carrinho com tabela -->
-    <section id="carrinho">
-      <h2>Carrinho de compras</h2>
+      <!-- Quadro de vantagens em formato de balão de anúncio -->
+      <section class="vantagens">
+        <h2>Vantagens de comprar com a MAIOR REVENDEDORA DE VEÍCULOS</h2>
+        <ul>
+          <li>Entregamos em qualquer cidade do Brasil</li>
+          <li>1 ano de GARANTIA</li>
+          <li>Financiamento PRÓPRIO</li>
+        </ul>
+      </section>
 
-      <table class="tabela-carrinho">
-        <thead>
-          <tr>
-            <th>Produto</th>
-            <th>Preço</th>
-            <th>Ação</th>
-          </tr>
-        </thead>
-        <tbody id="itens-carrinho"></tbody>
-      </table>
+      <!-- Produtos (preenchidos pelo JavaScript) -->
+      <section id="produtos">
+        <h2>Produtos</h2>
+        <div id="lista-produtos" class="grade-produtos"></div>
+      </section>
 
-      <p id="mensagem-carrinho" class="mensagem"></p>
-      <p class="total">Total: R$ <span id="total">0,00</span></p>
+      <!-- Carrinho com tabela -->
+      <section id="carrinho">
+        <h2>Carrinho de compras</h2>
 
-      <!-- Formulário do cupom -->
-      <form id="form-cupom" class="formulario">
-        <label for="cupom">Cupom de desconto:</label>
-        <input type="text" id="cupom" placeholder="Ex: MOTOR10">
-        <button type="submit" class="botao">Aplicar cupom</button>
-      </form>
-      <p id="msg-cupom" class="mensagem"></p>
+        <table class="tabela-carrinho">
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Preço</th>
+              <th>Quantidade</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody id="itens-carrinho"></tbody>
+        </table>
 
-      <button id="botao-comprar" class="botao botao-comprar">Comprar agora</button>
-    </section>
+        <p id="mensagem-carrinho" class="mensagem"></p>
+        <p class="total">Total: R$ <span id="total">0,00</span></p>
 
-    <!-- Formulário de contato -->
-    <section id="contato">
-      <h2>Contato</h2>
-      <form id="form-contato" class="formulario">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" placeholder="Seu nome">
+        <!-- Formulário do cupom -->
+        <form id="form-cupom" class="formulario">
+          <label for="cupom">Cupom de desconto:</label>
+          <input type="text" id="cupom" placeholder="Ex: MOTOR10">
+          <button type="submit" class="botao">Aplicar cupom</button>
+        </form>
+        <p id="msg-cupom" class="mensagem"></p>
 
-        <label for="email">E-mail:</label>
-        <input type="text" id="email" placeholder="seuemail@exemplo.com">
+        <button id="botao-finalizar" class="botao botao-comprar">Finalizar compra</button>
+      </section>
 
-        <label for="assunto">Assunto:</label>
-        <select id="assunto">
-          <option value="duvida">Dúvida</option>
-          <option value="troca">Troca</option>
-          <option value="elogio">Elogio</option>
-        </select>
+      <!-- Formulário de contato -->
+      <section id="contato">
+        <h2>Contato</h2>
+        <form id="form-contato" class="formulario">
+          <label for="nome">Nome:</label>
+          <input type="text" id="nome" placeholder="Seu nome">
 
-        <button type="submit" class="botao">Enviar</button>
-      </form>
-      <p id="msg-contato" class="mensagem"></p>
-    </section>
+          <label for="email">E-mail:</label>
+          <input type="text" id="email" placeholder="seuemail@exemplo.com">
 
-  </main>
+          <label for="assunto">Assunto:</label>
+          <select id="assunto">
+            <option value="duvida">Dúvida</option>
+            <option value="troca">Troca</option>
+            <option value="elogio">Elogio</option>
+          </select>
 
-  <footer>
-    <p>Visite também o <a href="https://github.com" target="_blank">GitHub</a></p>
-    <p>Trabalho feito por: [Nome 1], [Nome 2] e [Nome 3]</p>
-  </footer>
+          <button type="submit" class="botao">Enviar</button>
+        </form>
+        <p id="msg-contato" class="mensagem"></p>
+      </section>
+
+    </main>
+
+    <footer>
+      <p>Visite também o <a href="https://github.com" target="_blank">GitHub</a></p>
+      <p>Trabalho feito por: [Nome 1], [Nome 2] e [Nome 3]</p>
+    </footer>
+
+  </div>
+
+  <!-- TELA 2: finalização da compra (começa escondida) -->
+  <div id="tela-finalizacao" class="oculto">
+
+    <header class="topo">
+      <h1 class="titulo-loja">Loja Exemplo</h1>
+      <p class="subtitulo">Finalização da compra</p>
+    </header>
+
+    <main>
+
+      <!-- Itens do carrinho e total -->
+      <section class="resumo">
+        <h2>Itens do carrinho</h2>
+        <table class="tabela-carrinho">
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Quantidade</th>
+              <th>Preço unitário</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody id="itens-finalizacao"></tbody>
+        </table>
+        <p class="total">Total a pagar: R$ <span id="total-final">0,00</span></p>
+      </section>
+
+      <!-- Forma de pagamento -->
+      <section class="resumo">
+        <h2>Forma de pagamento</h2>
+        <div class="formulario">
+          <label for="pagamento">Escolha como deseja pagar:</label>
+          <select id="pagamento">
+            <option value="financiamento">Financiamento próprio</option>
+            <option value="cartao">Cartão de crédito</option>
+            <option value="boleto">Boleto bancário</option>
+            <option value="pix">Pix</option>
+          </select>
+          <p id="detalhes-pagamento" class="mensagem"></p>
+        </div>
+      </section>
+
+      <!-- Botões da tela de finalização -->
+      <div class="acoes">
+        <button id="botao-voltar" class="botao">Voltar ao carrinho</button>
+        <button id="botao-confirmar" class="botao botao-comprar">Confirmar compra</button>
+      </div>
+
+    </main>
+
+  </div>
 
   <script src="script.js"></script>
 </body>
