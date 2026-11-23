@@ -34,10 +34,37 @@ var detalhesPagamento = document.getElementById("detalhes-pagamento");
 
 // ---------- funções ----------
 
-// deixa o preço com 2 casas e virgula (ex: 335086,00)
+// deixa o preço no formato brasileiro (ex: 335.086,00)
 function formatarPreco(valor) {
-  var texto = valor.toFixed(2);
-  return texto.replace(".", ",");
+  // arredonda para 2 casas
+  valor = Math.round(valor * 100) / 100;
+
+  // separa a parte inteira dos centavos
+  var inteiro = Math.floor(valor);
+  var centavos = Math.round((valor - inteiro) * 100);
+
+  // se os centavos forem menores que 10, coloca um zero na frente (ex: 05)
+  var textoCentavos = "" + centavos;
+  if (centavos < 10) {
+    textoCentavos = "0" + centavos;
+  }
+
+  // percorre o numero de tras pra frente e coloca um ponto a cada 3 digitos
+  var numero = "" + inteiro;
+  var resultado = "";
+  var contador = 0;
+
+  for (var i = numero.length - 1; i >= 0; i--) {
+    resultado = numero.charAt(i) + resultado;
+    contador = contador + 1;
+
+    if (contador === 3 && i > 0) {
+      resultado = "." + resultado;
+      contador = 0;
+    }
+  }
+
+  return resultado + "," + textoCentavos;
 }
 
 // procura o produto no carrinho, se nao achar devolve -1
@@ -73,7 +100,7 @@ function mostrarProdutos() {
   for (var i = 0; i < produtos.length; i++) {
     listaProdutos.innerHTML +=
       '<div class="card-produto">' +
-      '<img src="' + produtos[i].imagem + '" alt="' + produtos[i].nome + '">' +
+      '<div class="caixa-imagem"><img src="' + produtos[i].imagem + '" alt="' + produtos[i].nome + '"></div>' +
       '<h3>' + produtos[i].nome + '</h3>' +
       '<p class="preco">R$ ' + formatarPreco(produtos[i].preco) + ' por unidade</p>' +
       '<button type="button" class="botao botao-add" onclick="adicionarAoCarrinho(' + i + ')">Adicionar ao carrinho</button>' +
