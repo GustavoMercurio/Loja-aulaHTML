@@ -1,16 +1,10 @@
-/* Regra geral: todo elemento usa box-sizing para facilitar o cálculo do tamanho */
+/* deixa o tamanho das caixas mais facil de calcular */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* Classe para esconder uma tela inteira */
-.oculto {
-  display: none !important;
-}
-
-/* Corpo da página: fonte e cores */
 body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
@@ -18,33 +12,36 @@ body {
   background: #f5f5f5;
 }
 
-/* Cabeçalho (azul marinho). Usado na loja e na tela de finalização */
+/* cabecalho azul (loja e finalizacao) */
 .topo {
-  position: sticky;
-  top: 0;
-  z-index: 10;
   background: #001f4d;
   color: #ffffff;
   padding: 15px 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   border-bottom: 5px solid #cc0000;
+  overflow: hidden;
 }
 
 .titulo-loja {
   font-size: 30px;
   font-weight: bold;
   color: #ffcc00;
+  float: left;
 }
 
 .subtitulo {
   font-size: 18px;
   font-weight: bold;
   color: #ffffff;
+  float: right;
+  margin-top: 8px;
 }
 
-/* Menu em linha (lista sem bolinhas) */
+/* menu na horizontal */
+nav {
+  float: right;
+  margin-top: 8px;
+}
+
 .menu {
   list-style: none;
 }
@@ -54,7 +51,7 @@ body {
   margin-left: 20px;
 }
 
-/* Formatação dos links */
+/* links */
 a {
   color: #ffcc00;
   text-decoration: none;
@@ -64,7 +61,7 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Banner com posicionamento relativo e absoluto */
+/* banner: o texto fica em cima da imagem */
 .banner {
   position: relative;
 }
@@ -76,29 +73,25 @@ a:hover {
 
 .texto-banner {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 40%;
+  left: 5%;
+  width: 90%;
   font-size: 40px;
   font-weight: bold;
   color: #ffffff;
-  background: rgba(204, 0, 0, 0.85);
+  background: #cc0000;
   border: 3px solid #ffcc00;
   padding: 15px 25px;
   border-radius: 8px;
   text-align: center;
-  width: 90%;
 }
 
-/* Área principal centralizada */
 main {
   width: 940px;
-  max-width: 95%;
   margin: 0 auto;
   padding: 40px 0;
 }
 
-/* Títulos das seções */
 h2 {
   font-size: 30px;
   font-weight: bold;
@@ -108,15 +101,13 @@ h2 {
   padding-bottom: 8px;
 }
 
-/* Quadro de vantagens estilizado como balão de anúncio */
+/* quadro amarelo de vantagens */
 .vantagens {
   background: #ffcc00;
   border: 6px solid #cc0000;
   border-radius: 20px;
   padding: 25px 30px;
   margin-bottom: 40px;
-  box-shadow: 6px 6px 0 #001f4d;
-  position: relative;
   text-align: center;
 }
 
@@ -139,33 +130,29 @@ h2 {
   margin-bottom: 10px;
 }
 
-/* Lista de produtos (flex). Todos os cards ficam com a mesma altura */
+/* produtos lado a lado com float */
 .grade-produtos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: space-between;
+  overflow: hidden;
 }
 
-/* Cada card é uma coluna: imagem, nome, preço e botão */
 .card-produto {
+  float: left;
   width: 31%;
+  margin-right: 3.5%;
   background: #ffffff;
   border: 2px solid #001f4d;
   border-radius: 8px;
   padding: 15px;
   text-align: center;
-  display: flex;
-  flex-direction: column;
 }
 
-/* A imagem inteira aparece dentro da área, sem cortar as laterais */
+.card-produto:last-child {
+  margin-right: 0;
+}
+
 .card-produto img {
   width: 100%;
-  height: 200px;
-  object-fit: contain;
-  background: #ffffff;
-  border-radius: 5px;
+  height: auto;
   display: block;
 }
 
@@ -183,13 +170,11 @@ h2 {
   margin: 8px 0;
 }
 
-/* Botão de adicionar produto dentro do card (vai para o final do card) */
 .botao-add {
   width: 100%;
-  margin-top: auto;
 }
 
-/* Carrinho */
+/* carrinho */
 #carrinho {
   margin-top: 50px;
 }
@@ -228,32 +213,36 @@ h2 {
   margin: 10px 0;
 }
 
-/* Blocos da tela de finalização */
 .resumo {
   margin-bottom: 30px;
 }
 
-/* Formulários */
+/* formularios */
 .formulario {
   background: #ffffff;
   border: 2px solid #001f4d;
   border-radius: 8px;
   padding: 20px;
   margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+}
+
+.formulario label {
+  display: block;
+  margin-bottom: 5px;
 }
 
 .formulario input,
 .formulario select {
+  display: block;
+  width: 100%;
   padding: 10px;
+  margin-bottom: 15px;
   border: 1px solid #001f4d;
   border-radius: 5px;
   font-size: 16px;
 }
 
-/* Botões */
+/* botoes */
 .botao {
   background: #ffcc00;
   color: #001f4d;
@@ -269,7 +258,7 @@ h2 {
   background: #e6b800;
 }
 
-/* Botões pequenos dentro da tabela do carrinho */
+/* botoes pequenos da tabela */
 .botao-acao {
   padding: 6px 10px;
   margin: 2px;
@@ -278,10 +267,6 @@ h2 {
 .botao-diminuir {
   background: #ffcc00;
   color: #001f4d;
-}
-
-.botao-diminuir:hover {
-  background: #e6b800;
 }
 
 .botao-aumentar {
@@ -302,7 +287,7 @@ h2 {
   background: #990000;
 }
 
-/* Botão grande de finalizar e de confirmar compra */
+/* botao grande de finalizar */
 .botao-comprar {
   display: block;
   margin: 20px auto 0 auto;
@@ -316,52 +301,29 @@ h2 {
   background: #990000;
 }
 
-/* Botões lado a lado na tela de finalização */
+/* botoes lado a lado na finalizacao */
 .acoes {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
+  overflow: hidden;
   margin-top: 20px;
 }
 
-.acoes .botao {
-  flex: 1;
+.botao-voltar {
+  float: left;
+  width: 48%;
   padding: 15px;
 }
 
-.acoes .botao-comprar {
+.botao-confirmar {
+  float: right;
+  width: 48%;
   margin: 0;
-  width: auto;
+  padding: 15px;
 }
 
-/* Rodapé */
 footer {
   background: #001f4d;
   color: #ffffff;
   text-align: center;
   padding: 20px;
   border-top: 5px solid #ffcc00;
-}
-
-/* Adaptação para celular */
-@media (max-width: 700px) {
-  .card-produto {
-    width: 100%;
-  }
-
-  .texto-banner {
-    font-size: 22px;
-  }
-
-  .topo {
-    flex-direction: column;
-  }
-
-  .acoes {
-    flex-direction: column;
-  }
-
-  .acoes .botao-comprar {
-    width: 100%;
-  }
 }
