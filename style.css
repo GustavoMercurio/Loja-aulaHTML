@@ -138,6 +138,7 @@ h2 {
 .card-produto {
   float: left;
   width: 31%;
+  height: 370px;
   margin-right: 3.5%;
   background: #ffffff;
   border: 2px solid #001f4d;
@@ -150,10 +151,16 @@ h2 {
   margin-right: 0;
 }
 
+/* caixa com altura fixa para a imagem, assim todos os cards ficam iguais */
+.caixa-imagem {
+  height: 200px;
+}
+
 .card-produto img {
-  width: 100%;
-  height: auto;
+  max-width: 100%;
+  max-height: 200px;
   display: block;
+  margin: 0 auto;
 }
 
 .card-produto h3 {
