@@ -8,10 +8,10 @@
 </head>
 <body>
 
-  <!-- TELA 1: a loja (produtos e carrinho) -->
+  <!-- TELA 1: loja (produtos, carrinho e contato) -->
   <div id="tela-loja">
 
-    <!-- Cabeçalho com o menu (lista e links) -->
+    <!-- cabecalho com o menu -->
     <header class="topo">
       <h1 class="titulo-loja">Loja Exemplo</h1>
       <nav>
@@ -23,7 +23,7 @@
       </nav>
     </header>
 
-    <!-- Banner com a imagem editada (caminhões no lugar dos pássaros) -->
+    <!-- banner com o texto por cima da imagem -->
     <section class="banner">
       <img src="banner.png" alt="Banner da loja com caminhões">
       <p class="texto-banner">Compre os melhores semi-novos da Região</p>
@@ -31,7 +31,6 @@
 
     <main>
 
-      <!-- Quadro de vantagens em formato de balão de anúncio -->
       <section class="vantagens">
         <h2>Vantagens de comprar com a MAIOR REVENDEDORA DE VEÍCULOS</h2>
         <ul>
@@ -41,13 +40,12 @@
         </ul>
       </section>
 
-      <!-- Produtos (preenchidos pelo JavaScript) -->
+      <!-- os produtos sao criados pelo script.js -->
       <section id="produtos">
         <h2>Produtos</h2>
         <div id="lista-produtos" class="grade-produtos"></div>
       </section>
 
-      <!-- Carrinho com tabela -->
       <section id="carrinho">
         <h2>Carrinho de compras</h2>
 
@@ -66,21 +64,20 @@
         <p id="mensagem-carrinho" class="mensagem"></p>
         <p class="total">Total: R$ <span id="total">0,00</span></p>
 
-        <!-- Formulário do cupom -->
-        <form id="form-cupom" class="formulario">
+        <!-- cupom de desconto -->
+        <form class="formulario" onsubmit="return false;">
           <label for="cupom">Cupom de desconto:</label>
           <input type="text" id="cupom" placeholder="Ex: MOTOR10">
-          <button type="submit" class="botao">Aplicar cupom</button>
+          <button type="button" class="botao" onclick="aplicarCupom()">Aplicar cupom</button>
         </form>
         <p id="msg-cupom" class="mensagem"></p>
 
-        <button id="botao-finalizar" class="botao botao-comprar">Finalizar compra</button>
+        <button type="button" class="botao botao-comprar" onclick="irParaFinalizacao()">Finalizar compra</button>
       </section>
 
-      <!-- Formulário de contato -->
       <section id="contato">
         <h2>Contato</h2>
-        <form id="form-contato" class="formulario">
+        <form class="formulario" onsubmit="return false;">
           <label for="nome">Nome:</label>
           <input type="text" id="nome" placeholder="Seu nome">
 
@@ -94,7 +91,7 @@
             <option value="elogio">Elogio</option>
           </select>
 
-          <button type="submit" class="botao">Enviar</button>
+          <button type="button" class="botao" onclick="enviarContato()">Enviar</button>
         </form>
         <p id="msg-contato" class="mensagem"></p>
       </section>
@@ -108,8 +105,8 @@
 
   </div>
 
-  <!-- TELA 2: finalização da compra (começa escondida) -->
-  <div id="tela-finalizacao" class="oculto">
+  <!-- TELA 2: finalizacao da compra (comeca escondida) -->
+  <div id="tela-finalizacao" style="display: none;">
 
     <header class="topo">
       <h1 class="titulo-loja">Loja Exemplo</h1>
@@ -118,7 +115,6 @@
 
     <main>
 
-      <!-- Itens do carrinho e total -->
       <section class="resumo">
         <h2>Itens do carrinho</h2>
         <table class="tabela-carrinho">
@@ -132,15 +128,15 @@
           </thead>
           <tbody id="itens-finalizacao"></tbody>
         </table>
+        <p id="linha-desconto" class="mensagem"></p>
         <p class="total">Total a pagar: R$ <span id="total-final">0,00</span></p>
       </section>
 
-      <!-- Forma de pagamento -->
       <section class="resumo">
         <h2>Forma de pagamento</h2>
         <div class="formulario">
           <label for="pagamento">Escolha como deseja pagar:</label>
-          <select id="pagamento">
+          <select id="pagamento" onchange="mostrarDetalhesPagamento()">
             <option value="financiamento">Financiamento próprio</option>
             <option value="cartao">Cartão de crédito</option>
             <option value="boleto">Boleto bancário</option>
@@ -150,10 +146,9 @@
         </div>
       </section>
 
-      <!-- Botões da tela de finalização -->
       <div class="acoes">
-        <button id="botao-voltar" class="botao">Voltar ao carrinho</button>
-        <button id="botao-confirmar" class="botao botao-comprar">Confirmar compra</button>
+        <button type="button" class="botao botao-voltar" onclick="voltarParaLoja()">Voltar ao carrinho</button>
+        <button type="button" class="botao botao-comprar botao-confirmar" onclick="confirmarCompra()">Confirmar compra</button>
       </div>
 
     </main>
