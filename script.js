@@ -1,58 +1,48 @@
-// ===== DADOS =====
-// Lista de produtos (array de objetos)
+// ---------- dados ----------
+
+// lista de produtos da loja
 var produtos = [
-  { nome: "Accelo 1016", preco: 335086.0, imagem: "accelo.jpg" },
-  { nome: "Delivery 11180", preco: 366541.0, imagem: "delivery.jpg" },
-  { nome: "Fiorino Endurance", preco: 91332.0, imagem: "fiorino.jpg" }
+  { nome: "Accelo 1016", preco: 335086, imagem: "accelo.jpg" },
+  { nome: "Delivery 11180", preco: 366541, imagem: "delivery.jpg" },
+  { nome: "Fiorino Endurance", preco: 91332, imagem: "fiorino.jpg" }
 ];
 
-// Carrinho começa vazio. Cada item tem nome, preço e quantidade
+// o carrinho começa vazio
 var carrinho = [];
 
-// Desconto atual em porcentagem (0 = sem desconto)
+// desconto em porcentagem (0 = sem desconto)
 var desconto = 0;
 
-// Cupom válido
 var cupomValido = "MOTOR10";
+var cupomAplicado = false;
 
-// ===== PEGANDO ELEMENTOS DA PÁGINA (DOM) =====
-// Telas
+// ---------- pegando elementos do HTML ----------
 var telaLoja = document.getElementById("tela-loja");
 var telaFinalizacao = document.getElementById("tela-finalizacao");
-
-// Loja
 var listaProdutos = document.getElementById("lista-produtos");
 var itensCarrinho = document.getElementById("itens-carrinho");
 var totalSpan = document.getElementById("total");
 var mensagemCarrinho = document.getElementById("mensagem-carrinho");
-var formCupom = document.getElementById("form-cupom");
 var inputCupom = document.getElementById("cupom");
 var msgCupom = document.getElementById("msg-cupom");
-var botaoFinalizar = document.getElementById("botao-finalizar");
-var formContato = document.getElementById("form-contato");
 var msgContato = document.getElementById("msg-contato");
-
-// Finalização
 var itensFinalizacao = document.getElementById("itens-finalizacao");
 var totalFinal = document.getElementById("total-final");
+var linhaDesconto = document.getElementById("linha-desconto");
 var selectPagamento = document.getElementById("pagamento");
 var detalhesPagamento = document.getElementById("detalhes-pagamento");
-var botaoVoltar = document.getElementById("botao-voltar");
-var botaoConfirmar = document.getElementById("botao-confirmar");
 
-// ===== FUNÇÕES =====
+// ---------- funções ----------
 
-// Deixa o preço no formato brasileiro (ex: 335.086,00)
+// deixa o preço com 2 casas e virgula (ex: 335086,00)
 function formatarPreco(valor) {
-  return valor.toLocaleString("pt-BR", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
+  var texto = valor.toFixed(2);
+  return texto.replace(".", ",");
 }
 
-// Procura se o produto já está no carrinho. Retorna a posição ou -1
+// procura o produto no carrinho, se nao achar devolve -1
 function acharNoCarrinho(nome) {
-  for (let i = 0; i < carrinho.length; i++) {
+  for (var i = 0; i < carrinho.length; i++) {
     if (carrinho[i].nome === nome) {
       return i;
     }
@@ -60,274 +50,216 @@ function acharNoCarrinho(nome) {
   return -1;
 }
 
-// Calcula o subtotal (sem desconto) somando preço x quantidade
+// soma preco x quantidade de todos os itens
 function calcularSubtotal() {
-  let subtotal = 0;
-  for (let i = 0; i < carrinho.length; i++) {
+  var subtotal = 0;
+  for (var i = 0; i < carrinho.length; i++) {
     subtotal = subtotal + carrinho[i].preco * carrinho[i].quantidade;
   }
   return subtotal;
 }
 
-// Calcula o total já com o desconto
+// subtotal menos o desconto
 function calcularTotal() {
-  let subtotal = calcularSubtotal();
-  let valorDesconto = subtotal * desconto / 100;
+  var subtotal = calcularSubtotal();
+  var valorDesconto = subtotal * desconto / 100;
   return subtotal - valorDesconto;
 }
 
-// Mostra os produtos na tela
+// cria os cards dos produtos na tela
 function mostrarProdutos() {
   listaProdutos.innerHTML = "";
 
-  // Repetição: cria um card para cada produto
-  for (let i = 0; i < produtos.length; i++) {
-    let produto = produtos[i];
-
-    let card = document.createElement("div");
-    card.className = "card-produto";
-    card.innerHTML =
-      '<img src="' + produto.imagem + '" alt="' + produto.nome + '">' +
-      "<h3>" + produto.nome + "</h3>" +
-      '<p class="preco">R$ ' + formatarPreco(produto.preco) + " por unidade</p>" +
-      '<button class="botao botao-add">Adicionar ao carrinho</button>';
-
-    listaProdutos.appendChild(card);
-
-    // Evento de clique no botão do produto
-    let botao = card.querySelector(".botao-add");
-    botao.addEventListener("click", function () {
-      adicionarAoCarrinho(produto);
-    });
+  for (var i = 0; i < produtos.length; i++) {
+    listaProdutos.innerHTML +=
+      '<div class="card-produto">' +
+      '<img src="' + produtos[i].imagem + '" alt="' + produtos[i].nome + '">' +
+      '<h3>' + produtos[i].nome + '</h3>' +
+      '<p class="preco">R$ ' + formatarPreco(produtos[i].preco) + ' por unidade</p>' +
+      '<button type="button" class="botao botao-add" onclick="adicionarAoCarrinho(' + i + ')">Adicionar ao carrinho</button>' +
+      '</div>';
   }
 }
 
-// Adiciona um produto no carrinho (ou soma 1 se ele já estiver lá)
-function adicionarAoCarrinho(produto) {
-  let posicao = acharNoCarrinho(produto.nome);
+// adiciona o produto, ou soma 1 se ele ja estiver no carrinho
+function adicionarAoCarrinho(indice) {
+  var produto = produtos[indice];
+  var posicao = acharNoCarrinho(produto.nome);
 
-  // Condicional: já existe no carrinho ou não
   if (posicao === -1) {
     carrinho.push({ nome: produto.nome, preco: produto.preco, quantidade: 1 });
   } else {
     carrinho[posicao].quantidade = carrinho[posicao].quantidade + 1;
   }
 
-  mensagemCarrinho.textContent = produto.nome + " foi adicionado ao carrinho.";
+  mensagemCarrinho.innerHTML = produto.nome + " foi adicionado ao carrinho.";
   atualizarCarrinho();
 }
 
-// Aumenta a quantidade de um item pelo índice
 function aumentarQuantidade(indice) {
   carrinho[indice].quantidade = carrinho[indice].quantidade + 1;
-  mensagemCarrinho.textContent = "Quantidade de " + carrinho[indice].nome + " aumentada.";
+  mensagemCarrinho.innerHTML = "Quantidade de " + carrinho[indice].nome + " aumentada.";
   atualizarCarrinho();
 }
 
-// Diminui a quantidade de um item pelo índice.
-// Se chegar a zero, o item é removido do carrinho
+// diminui 1, e se so tiver 1 remove o item
 function diminuirQuantidade(indice) {
-  // Condicional: quantidade maior que 1 ou não
   if (carrinho[indice].quantidade > 1) {
     carrinho[indice].quantidade = carrinho[indice].quantidade - 1;
-    mensagemCarrinho.textContent = "Quantidade de " + carrinho[indice].nome + " diminuída.";
+    mensagemCarrinho.innerHTML = "Quantidade de " + carrinho[indice].nome + " diminuída.";
+    atualizarCarrinho();
   } else {
-    carrinho.splice(indice, 1);
-    mensagemCarrinho.textContent = "Item removido do carrinho.";
+    removerDoCarrinho(indice);
   }
-  atualizarCarrinho();
 }
 
-// Remove um item pelo índice (posição na lista)
+// monta um carrinho novo sem o item que foi removido
 function removerDoCarrinho(indice) {
-  carrinho.splice(indice, 1);
-  mensagemCarrinho.textContent = "Item removido.";
+  var novoCarrinho = [];
+  for (var i = 0; i < carrinho.length; i++) {
+    if (i !== indice) {
+      novoCarrinho.push(carrinho[i]);
+    }
+  }
+  carrinho = novoCarrinho;
+  mensagemCarrinho.innerHTML = "Item removido do carrinho.";
   atualizarCarrinho();
 }
 
-// Atualiza a tabela da loja e o total
+// redesenha a tabela do carrinho e o total
 function atualizarCarrinho() {
   itensCarrinho.innerHTML = "";
 
-  // Condicional: carrinho vazio ou não
   if (carrinho.length === 0) {
     itensCarrinho.innerHTML = '<tr><td colspan="4">Seu carrinho está vazio.</td></tr>';
   }
 
-  // Repetição: monta uma linha da tabela para cada item
-  for (let i = 0; i < carrinho.length; i++) {
-    let item = carrinho[i];
-
+  for (var i = 0; i < carrinho.length; i++) {
     itensCarrinho.innerHTML +=
       "<tr>" +
-      "<td>" + item.nome + "</td>" +
-      "<td>R$ " + formatarPreco(item.preco) + "</td>" +
-      "<td>" + item.quantidade + "</td>" +
+      "<td>" + carrinho[i].nome + "</td>" +
+      "<td>R$ " + formatarPreco(carrinho[i].preco) + "</td>" +
+      "<td>" + carrinho[i].quantidade + "</td>" +
       "<td>" +
-        '<button class="botao botao-acao botao-diminuir" data-indice="' + i + '">− Diminuir</button>' +
-        '<button class="botao botao-acao botao-aumentar" data-indice="' + i + '">+ Aumentar</button>' +
-        '<button class="botao botao-acao botao-remover" data-indice="' + i + '">Remover</button>' +
+      '<button type="button" class="botao botao-acao botao-diminuir" onclick="diminuirQuantidade(' + i + ')">- Diminuir</button>' +
+      '<button type="button" class="botao botao-acao botao-aumentar" onclick="aumentarQuantidade(' + i + ')">+ Aumentar</button>' +
+      '<button type="button" class="botao botao-acao botao-remover" onclick="removerDoCarrinho(' + i + ')">Remover</button>' +
       "</td>" +
       "</tr>";
   }
 
-  // Mostra o total com o desconto
-  totalSpan.textContent = formatarPreco(calcularTotal());
-
-  // Evento de clique em cada botão "− Diminuir"
-  let botoesDiminuir = document.querySelectorAll(".botao-diminuir");
-  for (let i = 0; i < botoesDiminuir.length; i++) {
-    botoesDiminuir[i].addEventListener("click", function () {
-      let indice = Number(this.getAttribute("data-indice"));
-      diminuirQuantidade(indice);
-    });
-  }
-
-  // Evento de clique em cada botão "+ Aumentar"
-  let botoesAumentar = document.querySelectorAll(".botao-aumentar");
-  for (let i = 0; i < botoesAumentar.length; i++) {
-    botoesAumentar[i].addEventListener("click", function () {
-      let indice = Number(this.getAttribute("data-indice"));
-      aumentarQuantidade(indice);
-    });
-  }
-
-  // Evento de clique em cada botão "Remover"
-  let botoesRemover = document.querySelectorAll(".botao-remover");
-  for (let i = 0; i < botoesRemover.length; i++) {
-    botoesRemover[i].addEventListener("click", function () {
-      let indice = Number(this.getAttribute("data-indice"));
-      removerDoCarrinho(indice);
-    });
-  }
+  totalSpan.innerHTML = formatarPreco(calcularTotal());
 }
 
-// Mostra na tela de finalização os itens, o total e o pagamento
+// confere o cupom digitado
+function aplicarCupom() {
+  var codigo = inputCupom.value;
+
+  if (codigo === "") {
+    msgCupom.innerHTML = "Digite um cupom.";
+  } else if (codigo === cupomValido && cupomAplicado === false) {
+    desconto = 10;
+    cupomAplicado = true;
+    msgCupom.innerHTML = "Cupom aplicado! Você ganhou 10% de desconto.";
+  } else if (codigo === cupomValido && cupomAplicado === true) {
+    msgCupom.innerHTML = "Esse cupom já foi aplicado.";
+  } else {
+    desconto = 0;
+    cupomAplicado = false;
+    msgCupom.innerHTML = "Cupom inválido.";
+  }
+
+  atualizarCarrinho();
+}
+
+// preenche a tela de finalização
 function montarFinalizacao() {
   itensFinalizacao.innerHTML = "";
 
-  for (let i = 0; i < carrinho.length; i++) {
-    let item = carrinho[i];
-    let subtotalItem = item.preco * item.quantidade;
+  for (var i = 0; i < carrinho.length; i++) {
+    var subtotalItem = carrinho[i].preco * carrinho[i].quantidade;
 
     itensFinalizacao.innerHTML +=
       "<tr>" +
-      "<td>" + item.nome + "</td>" +
-      "<td>" + item.quantidade + "</td>" +
-      "<td>R$ " + formatarPreco(item.preco) + "</td>" +
+      "<td>" + carrinho[i].nome + "</td>" +
+      "<td>" + carrinho[i].quantidade + "</td>" +
+      "<td>R$ " + formatarPreco(carrinho[i].preco) + "</td>" +
       "<td>R$ " + formatarPreco(subtotalItem) + "</td>" +
       "</tr>";
   }
 
-  totalFinal.textContent = formatarPreco(calcularTotal());
+  if (desconto > 0) {
+    linhaDesconto.innerHTML = "Desconto do cupom: " + desconto + "%";
+  } else {
+    linhaDesconto.innerHTML = "";
+  }
+
+  totalFinal.innerHTML = formatarPreco(calcularTotal());
   mostrarDetalhesPagamento();
 }
 
-// Mostra os detalhes da forma de pagamento escolhida
+// texto que muda conforme a forma de pagamento
 function mostrarDetalhesPagamento() {
-  let forma = selectPagamento.value;
-  let total = calcularTotal();
+  var forma = selectPagamento.value;
+  var total = calcularTotal();
 
-  // Condicionais para cada forma de pagamento
   if (forma === "financiamento") {
-    detalhesPagamento.textContent =
-      "Financiamento próprio: as parcelas são combinadas diretamente com a loja, após a análise de crédito.";
+    detalhesPagamento.innerHTML = "Financiamento próprio: as parcelas são combinadas com a loja, depois da análise de crédito.";
   } else if (forma === "cartao") {
-    detalhesPagamento.textContent =
-      "Cartão de crédito: em até 12x de R$ " + formatarPreco(total / 12) + " (valor aproximado, sem juros).";
+    detalhesPagamento.innerHTML = "Cartão de crédito: em até 12x de R$ " + formatarPreco(total / 12) + " (valor aproximado, sem juros).";
   } else if (forma === "boleto") {
-    detalhesPagamento.textContent =
-      "Boleto bancário: vencimento em 3 dias úteis após a confirmação da compra.";
+    detalhesPagamento.innerHTML = "Boleto bancário: vencimento em 3 dias úteis depois da confirmação da compra.";
   } else if (forma === "pix") {
-    detalhesPagamento.textContent =
-      "Pix: pagamento à vista, com aprovação imediata após a confirmação.";
+    detalhesPagamento.innerHTML = "Pix: pagamento à vista, aprovação imediata.";
   }
 }
 
-// Troca da tela da loja para a tela de finalização
+// vai da loja para a tela de finalização
 function irParaFinalizacao() {
-  // Condicional: não deixa finalizar com carrinho vazio
   if (carrinho.length === 0) {
-    mensagemCarrinho.textContent = "Adicione produtos antes de finalizar a compra.";
+    mensagemCarrinho.innerHTML = "Adicione produtos antes de finalizar a compra.";
     return;
   }
 
   montarFinalizacao();
-  telaLoja.classList.add("oculto");
-  telaFinalizacao.classList.remove("oculto");
-  window.scrollTo(0, 0);
+  telaLoja.style.display = "none";
+  telaFinalizacao.style.display = "block";
 }
 
-// Volta da tela de finalização para a loja
 function voltarParaLoja() {
-  telaFinalizacao.classList.add("oculto");
-  telaLoja.classList.remove("oculto");
-  window.scrollTo(0, 0);
+  telaFinalizacao.style.display = "none";
+  telaLoja.style.display = "block";
 }
 
-// ===== EVENTOS =====
-
-// Aplicar cupom (o formulário não recarrega a página)
-formCupom.addEventListener("submit", function (evento) {
-  evento.preventDefault();
-
-  let codigo = inputCupom.value.trim().toUpperCase();
-
-  // Condicionais com operadores lógicos
-  if (codigo === "") {
-    desconto = 0;
-    msgCupom.textContent = "Digite um cupom.";
-  } else if (codigo === cupomValido) {
-    desconto = 10;
-    msgCupom.textContent = "Cupom aplicado! Você ganhou 10% de desconto.";
-  } else {
-    desconto = 0;
-    msgCupom.textContent = "Cupom inválido.";
-  }
-
-  atualizarCarrinho();
-});
-
-// Botão Finalizar compra (abre a tela de finalização)
-botaoFinalizar.addEventListener("click", irParaFinalizacao);
-
-// Botão Voltar ao carrinho
-botaoVoltar.addEventListener("click", voltarParaLoja);
-
-// Mudar a forma de pagamento atualiza os detalhes
-selectPagamento.addEventListener("change", mostrarDetalhesPagamento);
-
-// Botão Confirmar compra
-botaoConfirmar.addEventListener("click", function () {
-  let forma = selectPagamento.options[selectPagamento.selectedIndex].text;
-
-  // Limpa o carrinho e o cupom
+// confirma a compra e limpa tudo
+function confirmarCompra() {
   carrinho = [];
   desconto = 0;
+  cupomAplicado = false;
   inputCupom.value = "";
-  msgCupom.textContent = "";
+  msgCupom.innerHTML = "";
 
   atualizarCarrinho();
   voltarParaLoja();
-  mensagemCarrinho.textContent = "Compra realizada com sucesso! Pagamento: " + forma + ". Obrigado.";
-});
+  mensagemCarrinho.innerHTML = "Compra realizada com sucesso! Obrigado.";
+}
 
-// Formulário de contato
-formContato.addEventListener("submit", function (evento) {
-  evento.preventDefault();
+// formulário de contato
+function enviarContato() {
+  var nome = document.getElementById("nome").value;
+  var email = document.getElementById("email").value;
 
-  let nome = document.getElementById("nome").value;
-  let email = document.getElementById("email").value;
-
-  // Operador lógico && (e): precisa ter nome E e-mail com @
-  if (nome !== "" && email.indexOf("@") !== -1) {
-    msgContato.textContent = "Obrigado, " + nome + "! Sua mensagem foi enviada.";
-    formContato.reset();
+  if (nome === "" || email === "") {
+    msgContato.innerHTML = "Preencha o nome e o e-mail.";
+  } else if (email.indexOf("@") === -1) {
+    msgContato.innerHTML = "Digite um e-mail válido.";
   } else {
-    msgContato.textContent = "Preencha o nome e um e-mail válido.";
+    msgContato.innerHTML = "Obrigado, " + nome + "! Sua mensagem foi enviada.";
+    document.getElementById("nome").value = "";
+    document.getElementById("email").value = "";
   }
-});
+}
 
-// ===== INICIALIZAÇÃO =====
+// ---------- quando a pagina abre ----------
 mostrarProdutos();
 atualizarCarrinho();
